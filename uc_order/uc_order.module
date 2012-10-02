@@ -1891,7 +1891,7 @@ function uc_order_status_data($status_id, $key) {
     }
   }
 
-  return $statuses[$status_id][$key];
+  return isset($statuses[$status_id][$key]) ? $statuses[$status_id][$key] : FALSE;
 }
 
 /**
