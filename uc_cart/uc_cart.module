@@ -270,6 +270,24 @@ function uc_cart_user_login(&$edit, $account) {
 }
 
 /**
+ * Implements hook_user_update().
+ */
+function uc_cart_user_update(&$edit, $account, $category) {
+  // Load an order from the session, if available.
+  if (isset($_SESSION['cart_order'])) {
+    $order = uc_order_load($_SESSION['cart_order']);
+    if ($order && (uc_order_status_data($order->order_status, 'state') == 'in_checkout') &&
+          ($account->uid == $order->uid)) {
+      //update the users primary order email if it has changed
+      if ($order->primary_email != $account->mail) {
+        $order->primary_email = $account->mail;
+        uc_order_save($order);        
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_block_info().
  */
 function uc_cart_block_info() {
