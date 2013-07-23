@@ -743,8 +743,17 @@ function uc_reports_sales_summary() {
   // Calculate and add today's sales summary to the report table.
   $today = uc_reports_get_sales($today_start);
 
-  $rows[] = array(
-    l(t('Today, !date', array('!date' => format_date($today_start, 'uc_store'))), 'admin/store/orders/search/results/0/0/0/0/0/0/' . $today_start . '/' . $today_end),
+  $rows[] = array(//?created[min][year]=2013&created[min][month]=7&created[min][day]=21&created[max][year]=2013&created[max][month]=7&created[max][day]=23
+    l(t('Today, !date', array('!date' => format_date($today_start, 'uc_store'))), 'admin/store/orders/search', 
+        array(
+          'query' => array(
+            'created[min][year]' => date('Y', $today_start),
+            'created[min][month]' => date('n', $today_start),
+            'created[min][day]' => date('d', $today_start),  
+            'created[max][year]' => date('Y', $today_end),
+            'created[max][month]' => date('n', $today_end),
+            'created[max][day]' => date('d', $today_end),                  
+          ))),
     $today['total'],
     array('data' => array('#theme' => 'uc_price', '#price' => $today['income'])),
     array('data' => array('#theme' => 'uc_price', '#price' => $today['average'])),
@@ -754,7 +763,16 @@ function uc_reports_sales_summary() {
   $yesterday = uc_reports_get_sales($today_start - 86400);
 
   $rows[] = array(
-    l(t('Yesterday, !date', array('!date' => format_date($today_start - 86400, 'uc_store'))), 'admin/store/orders/search/results/0/0/0/0/0/0/' . ($today_start - 86400) . '/' . ($today_end - 86400)),
+    l(t('Yesterday, !date', array('!date' => format_date($today_start - 86400, 'uc_store'))), 'admin/store/orders/search',
+        array(
+          'query' => array(
+            'created[min][year]' => date('Y', $today_start - 86400),
+            'created[min][month]' => date('n', $today_start - 86400),
+            'created[min][day]' => date('d', $today_start - 86400),  
+            'created[max][year]' => date('Y', $today_end - 86400),
+            'created[max][month]' => date('n', $today_end - 86400),
+            'created[max][day]' => date('d', $today_end - 86400),                  
+          ))),
     $yesterday['total'],
     array('data' => array('#theme' => 'uc_price', '#price' => $yesterday['income'])),
     array('data' => array('#theme' => 'uc_price', '#price' => $yesterday['average'])),
@@ -766,7 +784,16 @@ function uc_reports_sales_summary() {
 
   // Add the month-to-date details to the report table.
   $rows[] = array(
-    l(t('Month-to-date, @month', array('@month' => $month_title)), 'admin/store/orders/search/results/0/0/0/0/0/0/' . $month_start . '/' . $month_end),
+    l(t('Month-to-date, @month', array('@month' => $month_title)), 'admin/store/orders/search',
+        array(
+          'query' => array(
+            'created[min][year]' => date('Y', $month_start - 86400),
+            'created[min][month]' => date('n', $month_start - 86400),
+            'created[min][day]' => date('d', $month_start - 86400),  
+            'created[max][year]' => date('Y', $month_end - 86400),
+            'created[max][month]' => date('n', $month_end - 86400),
+            'created[max][day]' => date('d', $month_end - 86400),                  
+          ))),
     $month['total'],
     array('data' => array('#theme' => 'uc_price', '#price' => $month['income'])),
     array('data' => array('#theme' => 'uc_price', '#price' => $month['average'])),
