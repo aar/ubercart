@@ -545,8 +545,6 @@ function uc_order_entity_info() {
       ),
       // Entity API callbacks.
       'access callback'   => 'uc_order_order_product_access',
-      'save callback'     => 'uc_order_product_entity_save',
-      'deletion callback' => 'uc_order_product_delete',
       'label callback'    => 'uc_order_product_label',  
     ),
   );
