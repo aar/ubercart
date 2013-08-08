@@ -749,10 +749,10 @@ function uc_reports_sales_summary() {
           'query' => array(
             'created[min][year]' => date('Y', $today_start),
             'created[min][month]' => date('n', $today_start),
-            'created[min][day]' => date('d', $today_start),  
+            'created[min][day]' => date('j', $today_start),  
             'created[max][year]' => date('Y', $today_end),
             'created[max][month]' => date('n', $today_end),
-            'created[max][day]' => date('d', $today_end),                  
+            'created[max][day]' => date('j', $today_end),                  
           ))),
     $today['total'],
     array('data' => array('#theme' => 'uc_price', '#price' => $today['income'])),
